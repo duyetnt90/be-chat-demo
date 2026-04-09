@@ -23,7 +23,12 @@ const io = new Server(server, {
 });
 
 // middleware
-app.use(cors());
+app.use(cors({
+    origin: [process.env.CLIENT_URL],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true
+}));
+
 app.use(express.json());
 
 // routes

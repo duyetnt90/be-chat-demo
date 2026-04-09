@@ -5,7 +5,7 @@ export const findByEmail = async (req, res) => {
     try {
         const { email } = req.body;
         if (!email) {
-            res.json({message: "data miss"})
+            throw new Error("No token");
         }
         const user = await userService.findByEmail(email)
         res.json(user);
