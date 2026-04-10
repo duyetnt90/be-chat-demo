@@ -8,8 +8,11 @@ import { fileURLToPath } from "url";
 
 import connectDB from "./config/db.js";
 import { initSocket } from "./sockets/index.js";
-import authRoutes from "./routes/auth.routes.js";
-import userRoutes from "./routes/user.routes.js";
+import authRoutes from "./routes/auth.route.js";
+import userRoutes from "./routes/user.route.js";
+import messageRoutes from "./routes/message.route.js";
+import conversationRoute from "./routes/conversation.route.js";
+
 
 dotenv.config();
 
@@ -34,6 +37,8 @@ app.use(express.json());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/conversations", conversationRoute);
 // public
 app.use(express.static("public"));
 
@@ -51,6 +56,6 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
 });

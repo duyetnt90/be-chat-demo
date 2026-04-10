@@ -11,3 +11,7 @@ export const findByEmail = (email) => {
 export const findById = (id) => {
     return User.findById(id);
 };
+
+export const getAllUsers = () => {
+    return User.find().select("-password");
+}
