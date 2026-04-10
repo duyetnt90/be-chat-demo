@@ -4,11 +4,13 @@ export const initSocket = (io) => {
         const userId = socket.handshake.query.userId;
 
         socket.on("join_room", (roomId) => {
-            socket.join(roomId);
+            console.log("ROOM_ID: ", roomId)
+            socket.join(roomId, userId);
         });
 
         socket.on("send_message", (data) => {
-            io.to(data.roomId).emit("receive_message", {
+            console.log("data: ", data)
+            io.to(data.conversationId).emit("receive_message", {
                 ...data,
                 createdAt: new Date()
             });
