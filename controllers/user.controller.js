@@ -1,6 +1,5 @@
 import * as userService from "../services/user.service.js";
 import * as requestService from "../services/friend.service.js";
-import {getFriendsRelationships} from "../services/friend.service.js";
 
 
 export const findByEmail = async (req, res) => {
@@ -62,3 +61,30 @@ export const searchUsers = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+export const getProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId
+        if (!userId) {
+            throw new Error("User not exists");
+        }
+        const user = await userService.findById(userId)
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const data = req.body;
+        if (!userId) {
+            throw new Error("User not exists");
+        }
+        const user = await userService.updateProfile(userId, data)
+        res.json(data);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}

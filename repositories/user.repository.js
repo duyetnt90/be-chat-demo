@@ -27,3 +27,12 @@ export const searchUsers = (keyword) => {
         username: { $regex: keyword, $options: "i" }
     }).select("-password");
 }
+
+export const updateProfile = async (id, data) => {
+    const { username, avatar, content } = data;
+    return User.findByIdAndUpdate(
+        id,
+        { username, avatar, content },
+        { new: true }
+    ).select("-password");
+}
