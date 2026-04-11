@@ -27,3 +27,7 @@ export const acceptFriendRequest = async (id) => {
 export const getRequests = async (userId) => {
     return await friendRepo.getRequests(userId);
 }
+
+export const getFriendsRelationships = async (userId) => {
+    return await friendRepo.getFriendsRelationships(userId);
+}

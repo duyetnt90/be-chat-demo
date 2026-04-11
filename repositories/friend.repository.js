@@ -39,3 +39,12 @@ export const getRequests = async (userId) => {
         status: "pending"
     }).populate("fromUserId", "username avatar");
 }
+
+export const getFriendsRelationships = async (userId) => {
+    return FriendRequest.find({
+        $or: [
+            {fromUserId: userId},
+            {toUserId: userId}
+        ]
+    });
+};
