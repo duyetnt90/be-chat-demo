@@ -15,3 +15,15 @@ export const findById = (id) => {
 export const getAllUsers = () => {
     return User.find().select("-password");
 }
+
+export const findFriends = (friendIds) => {
+    return User.find({
+        _id: { $in: friendIds }
+    }).select("-password");
+}
+
+export const searchUsers = (keyword) => {
+    return User.find({
+        username: { $regex: keyword, $options: "i" }
+    }).select("-password");
+}

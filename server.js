@@ -12,6 +12,7 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import messageRoutes from "./routes/message.route.js";
 import conversationRoute from "./routes/conversation.route.js";
+import friendRoute from "./routes/friend.routes.js";
 
 
 dotenv.config();
@@ -27,7 +28,7 @@ const io = new Server(server, {
 
 // middleware
 app.use(cors({
-    origin: [process.env.CLIENT_URL],
+    origin: "http://localhost:5173",
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
@@ -39,6 +40,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/conversations", conversationRoute);
+app.use("/api", friendRoute);
 // public
 app.use(express.static("public"));
 

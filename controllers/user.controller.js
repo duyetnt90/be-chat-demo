@@ -26,3 +26,13 @@ export const getAllUsers = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+export const searchUsers = async (req, res) => {
+    try {
+        const { keyword } = req.params;
+        const users = await userService.searchUsers(keyword)
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
