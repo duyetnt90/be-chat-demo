@@ -7,5 +7,5 @@ export const createConversation = (members) => {
 export const findByUserId = (userId) => {
     return Conversation.find({
         members: { $in: [userId] },
-    });
+    }).populate("members", "name username avatar");
 }
