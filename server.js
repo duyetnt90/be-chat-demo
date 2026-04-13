@@ -26,10 +26,9 @@ const io = new Server(server, {
     }
 });
 
-// middleware
 const allowedOrigins = [
-    "http://localhost:5173",
-    "https://chat.duyetnt.com",
+    process.env.CLIENT_URL,
+    process.env.CLIENT_URL_PROD
 ];
 
 app.use(cors({
