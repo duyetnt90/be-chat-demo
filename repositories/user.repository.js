@@ -29,11 +29,10 @@ export const searchUsers = (keyword, currentUserId) => {
     }).select("-password");
 }
 
-export const updateProfile = async (id, data) => {
-    const { name, avatar, content } = data;
+export const updateProfile = async (id, dataUpdate) => {
     return User.findByIdAndUpdate(
         id,
-        { name, avatar, content },
+        dataUpdate,
         { new: true }
     ).select("-password");
 }

@@ -78,12 +78,19 @@ export const getProfile = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const userId = req.user.userId;
-        const data = req.body;
+        const {username} = req.body;
+        const dataUpdate = {
+            name: req.body.name,
+            content: req.body.content
+        }
         if (!userId) {
             throw new Error("User not exists");
         }
-        const user = await userService.updateProfile(userId, data)
-        res.json(data);
+        if (req.file) {
+            dataUpdate.avatar = `/uploads//${username}/${req.file.filename}`;
+        }
+        const userUpdate = await userService.updateProfile(userId, dataUpdate)
+        res.json(userUpdate);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

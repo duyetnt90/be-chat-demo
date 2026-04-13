@@ -17,6 +17,6 @@ export const searchUsers = async (keyword, currentUserId) => {
     return userRepo.searchUsers(keyword, currentUserId);
 }
 
-export const updateProfile = async (id, data) => {
-    return userRepo.updateProfile(id, data);
+export const updateProfile = async (id, dataUpdate) => {
+    return userRepo.updateProfile(id, dataUpdate);
 }

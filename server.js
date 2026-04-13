@@ -43,6 +43,7 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api", friendRoute);
 // public
 app.use(express.static("public"));
+app.use("public/uploads", express.static("public/uploads"));
 
 // socket
 initSocket(io);
