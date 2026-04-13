@@ -7,7 +7,7 @@ services:
       dockerfile: docker/node/Dockerfile
     container_name: chat-node
     ports:
-      - "3001:3000"
+      - "3000:3000"
     volumes:
       - .:/app
     env_file:
