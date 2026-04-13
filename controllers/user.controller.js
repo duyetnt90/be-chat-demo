@@ -32,7 +32,7 @@ export const searchUsers = async (req, res) => {
     try {
         const userId = req.user.userId;
         const { keyword } = req.params;
-        const users = await userService.searchUsers(keyword);
+        const users = await userService.searchUsers(keyword, userId);
         const requests = await requestService.getFriendsRelationships(userId);
 
         const result = users.map((u) => {

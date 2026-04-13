@@ -37,7 +37,7 @@ export const getRequests = async (userId) => {
     return FriendRequest.find({
         toUserId: userId,
         status: "pending"
-    }).populate("fromUserId", "username avatar");
+    }).populate("fromUserId", "name username avatar");
 }
 
 export const getFriendsRelationships = async (userId) => {

@@ -22,17 +22,18 @@ export const findFriends = (friendIds) => {
     }).select("-password");
 }
 
-export const searchUsers = (keyword) => {
+export const searchUsers = (keyword, currentUserId) => {
     return User.find({
-        username: { $regex: keyword, $options: "i" }
+        username: { $regex: keyword, $options: "i" },
+        _id: { $ne: currentUserId }
     }).select("-password");
 }
 
 export const updateProfile = async (id, data) => {
-    const { username, avatar, content } = data;
+    const { name, avatar, content } = data;
     return User.findByIdAndUpdate(
         id,
-        { username, avatar, content },
+        { name, avatar, content },
         { new: true }
     ).select("-password");
 }

@@ -13,8 +13,8 @@ export const getAllUsers = async (userId) => {
     return users.filter((u) => u._id.toString() !== userId)
 }
 
-export const searchUsers = async (keyword) => {
-    return userRepo.searchUsers(keyword);
+export const searchUsers = async (keyword, currentUserId) => {
+    return userRepo.searchUsers(keyword, currentUserId);
 }
 
 export const updateProfile = async (id, data) => {

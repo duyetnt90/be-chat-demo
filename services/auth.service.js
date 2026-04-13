@@ -3,7 +3,7 @@ import * as userRepo from "../repositories/user.repository.js";
 import {generateToken} from "../config/jwt.js";
 
 export const register = async (data) => {
-    const { username, email, password, avatar } = data;
+    const { name, username, email, password, avatar } = data;
 
     const existing = await userRepo.findByEmail(email);
     if (existing) throw new Error("Email already exists");
@@ -11,6 +11,7 @@ export const register = async (data) => {
     const hashed = await bcrypt.hash(password, 10);
 
     return await userRepo.createUser({
+        name,
         username,
         email,
         password: hashed,
