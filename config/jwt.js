@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const generateToken = (payload) => {
+export const generateToken = (payload, expiresIn = null) => {
     return jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN
+        expiresIn: expiresIn || process.env.JWT_EXPIRES_IN
     });
 };

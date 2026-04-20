@@ -11,9 +11,19 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const data = await authService.login(req.body);
+        const data = await authService.login(req.body, res);
         res.json(data);
     } catch (err) {
         res.status(400).json({ message: err.message });
+    }
+};
+
+export const getSocketToken = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const socketToken = await authService.generateSocketToken(userId);
+        res.json({ token: socketToken });
+    } catch (err) {
+        res.status(500).json({ message: "Failed to generate socket token" });
     }
 };

@@ -12,6 +12,10 @@ export const createConversation = async (senderId, receiverId) => {
     return await conversationRepo.createConversation([senderId, receiverId]);
 };
 
-export const getConversations = async (userId) => {
-    return conversationRepo.findByUserId(userId);
+export const getConversations = async (userId, page = 1, limit = 20) => {
+    return conversationRepo.findByUserId(userId, page, limit);
+};
+
+export const getConversationsCount = async (userId) => {
+    return conversationRepo.countByUserId(userId);
 };

@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import connectDB from "./config/db.js";
 import { initSocket } from "./sockets/index.js";
+import { createRateLimiter } from "./middleware/rateLimiter.js";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import messageRoutes from "./routes/message.route.js";
@@ -16,6 +17,23 @@ import friendRoute from "./routes/friend.routes.js";
 
 
 dotenv.config();
+
+// Validate required environment variables
+const requiredEnvVars = [
+    "MONGO_URI",
+    "JWT_SECRET",
+    "CLIENT_URL",
+    "PORT"
+];
+
+const missingVars = requiredEnvVars.filter(
+    varName => !process.env[varName]
+);
+
+if (missingVars.length > 0) {
+    console.error(`Missing required environment variables: ${missingVars.join(", ")}`);
+    process.exit(1);
+}
 
 const app = express();
 const server = http.createServer(app);
@@ -29,7 +47,7 @@ const io = new Server(server, {
 const allowedOrigins = [
     process.env.CLIENT_URL,
     process.env.CLIENT_URL_PROD
-];
+].filter(Boolean);
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -45,6 +63,22 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Rate limiters
+const authLimiter = createRateLimiter(
+    15 * 60 * 1000, // 15 minutes
+    5, // 5 attempts per window
+    "Too many login attempts, please try again later"
+);
+
+const generalLimiter = createRateLimiter(
+    15 * 60 * 1000, // 15 minutes
+    100 // 100 requests per window
+);
+
+// Apply rate limiting
+app.use(generalLimiter);
+app.use("/api/auth", authLimiter);
 
 // routes
 app.use("/api/auth", authRoutes);
