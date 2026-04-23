@@ -1,4 +1,5 @@
 import * as authService from "../services/auth.service.js";
+import logger from "../utils/logger.js";
 
 export const register = async (req, res) => {
     try {
@@ -14,6 +15,7 @@ export const login = async (req, res) => {
         const data = await authService.login(req.body, res);
         res.json(data);
     } catch (err) {
+        logger.error("Login error", { message: err.message, stack: err.stack });
         res.status(400).json({ message: err.message });
     }
 };

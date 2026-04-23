@@ -9,6 +9,6 @@ router.get("/find", authMiddleware, userController.findByEmail);
 router.get("/get-all/:userId", authMiddleware, userController.getAllUsers);
 router.get("/search/:keyword", authMiddleware, userController.searchUsers);
 router.get("/profile", authMiddleware, userController.getProfile);
-router.put("/profile", upload.single("avatar"), authMiddleware, userController.updateProfile);
+router.put("/profile", authMiddleware, upload.single("avatar"), userController.updateProfile);
 
 export default router;

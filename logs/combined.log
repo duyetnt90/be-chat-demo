@@ -1,0 +1,10 @@
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:35.758Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:37.169Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:38.472Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:49.840Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:51.334Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:13:52.424Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:14:00.427Z"}
+{"level":"error","message":"Error searching users Assignment to constant variable.","stack":"TypeError: Assignment to constant variable.\n    at searchUsers (file:///app/controllers/user.controller.js:38:10)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2026-04-23T04:14:01.637Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:14:24.256Z"}
+{"level":"info","message":"Server running on port 3000","timestamp":"2026-04-23T04:14:25.337Z"}

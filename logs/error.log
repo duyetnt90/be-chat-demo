@@ -1,0 +1,1 @@
+{"level":"error","message":"Error searching users Assignment to constant variable.","stack":"TypeError: Assignment to constant variable.\n    at searchUsers (file:///app/controllers/user.controller.js:38:10)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2026-04-23T04:14:01.637Z"}

@@ -1,5 +1,6 @@
 import * as userService from "../services/user.service.js";
 import * as requestService from "../services/friend.service.js";
+import logger from "../utils/logger.js";
 
 
 export const findByEmail = async (req, res) => {
@@ -58,6 +59,7 @@ export const searchUsers = async (req, res) => {
 
         res.json(result);
     } catch (err) {
+        logger.error("Error searching users", { message: err.message, stack: err.stack });
         res.status(500).json({ message: err.message });
     }
 };
@@ -71,6 +73,7 @@ export const getProfile = async (req, res) => {
         const user = await userService.findById(userId)
         res.json(user);
     } catch (err) {
+        logger.error("Error getting profile", { message: err.message, stack: err.stack });
         res.status(500).json({ message: err.message });
     }
 }
@@ -78,7 +81,6 @@ export const getProfile = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         const userId = req.user.userId;
-        const {username} = req.body;
         const dataUpdate = {
             name: req.body.name,
             content: req.body.content
@@ -87,11 +89,12 @@ export const updateProfile = async (req, res) => {
             throw new Error("User not exists");
         }
         if (req.file) {
-            dataUpdate.avatar = `/uploads//${username}/${req.file.filename}`;
+            dataUpdate.avatar = `/uploads/${userId}/${req.file.filename}`;
         }
         const userUpdate = await userService.updateProfile(userId, dataUpdate)
         res.json(userUpdate);
     } catch (err) {
+        logger.error("Error updating profile", { message: err.message, stack: err.stack });
         res.status(500).json({ message: err.message });
     }
 }

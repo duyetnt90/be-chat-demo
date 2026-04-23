@@ -14,9 +14,14 @@ import userRoutes from "./routes/user.route.js";
 import messageRoutes from "./routes/message.route.js";
 import conversationRoute from "./routes/conversation.route.js";
 import friendRoute from "./routes/friend.routes.js";
+import logger from "./utils/logger.js";
 
 
 dotenv.config();
+
+// Define __dirname early since it's needed by middleware
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Validate required environment variables
 const requiredEnvVars = [
@@ -78,7 +83,6 @@ const generalLimiter = createRateLimiter(
 
 // Apply rate limiting
 app.use(generalLimiter);
-app.use("/api/auth", authLimiter);
 
 // routes
 app.use("/api/auth", authRoutes);
@@ -88,7 +92,7 @@ app.use("/api/conversations", conversationRoute);
 app.use("/api", friendRoute);
 // public
 app.use(express.static("public"));
-app.use("public/uploads", express.static("public/uploads"));
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 
 // socket
 initSocket(io);
@@ -96,17 +100,24 @@ initSocket(io);
 // DB
 connectDB()
 
-// run
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// Global error handler
+app.use((err, req, res, next) => {
+    logger.error("Unhandled error", {
+        message: err.message,
+        stack: err.stack,
+        path: req.originalUrl,
+        method: req.method
+    });
+    res.status(500).json({ message: "Internal server error" });
+});
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
 
 //server.listen(process.env.PORT, () => {

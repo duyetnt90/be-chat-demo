@@ -1,9 +1,17 @@
 // Simple in-memory rate limiter (can be replaced with express-rate-limit later)
 const rateLimitStore = new Map();
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 export const createRateLimiter = (windowMs, maxRequests, message) => {
     return (req, res, next) => {
-        const key = req.ip; // In production, use a more sophisticated key
+        // Skip rate limiting in development for easier testing
+        // Set NODE_ENV=production to enable rate limiting
+        if (isDevelopment) {
+            return next();
+        }
+
+        // Use a more reliable key for rate limiting
+        const key = req.ip || req.connection?.remoteAddress || req.socket?.remoteAddress || 'development';
         const now = Date.now();
         const windowStart = now - windowMs;
 
